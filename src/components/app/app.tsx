@@ -20,20 +20,15 @@ import {
   ProtectedRoute
 } from '@components';
 import { useDispatch } from '../../services/store';
-import {
-  getIngredientsThunk,
-  getUserStateSelector,
-  getUserThunk
-} from '@slices';
+import { getIngredientsThunk, getUserThunk } from '@slices';
 import { useEffect } from 'react';
-import { useSelector } from 'react-redux';
-import { Preloader } from '../ui/preloader';
+
+import { Center } from '../center-with-title';
 
 const App = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
-  const userLoading = useSelector(getUserStateSelector).isLoadong;
   const backgroundLocation = location.state?.background;
 
   useEffect(() => {
@@ -46,7 +41,14 @@ const App = () => {
       <AppHeader />
       <Routes location={backgroundLocation || location}>
         <Route path='/' element={<ConstructorPage />} />
-        <Route path='/ingredients/:id' element={<IngredientDetails />} />
+        <Route
+          path='/ingredients/:id'
+          element={
+            <Center title={'Детали ингредиента'}>
+              <IngredientDetails />
+            </Center>
+          }
+        />
         <Route path='/feed' element={<Feed />} />
         <Route path='/feed/:number' element={<OrderInfo />} />
         <Route element={<ProtectedRoute forAuthorized={false} />}>
