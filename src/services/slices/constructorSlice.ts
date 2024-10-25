@@ -5,7 +5,7 @@ import {
   PayloadAction
 } from '@reduxjs/toolkit';
 import { TConstructorIngredient, TIngredient, TOrder } from '@utils-types';
-import { orderBurgerApi } from '@api';
+import { orderBurgerApi } from '../../utils/burger-api';
 import { stat } from 'fs';
 
 export interface constructorState {

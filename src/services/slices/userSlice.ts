@@ -8,8 +8,8 @@ import {
   refreshToken,
   forgotPasswordApi,
   resetPasswordApi
-} from '@api';
-import type { TRegisterData, TLoginData } from '@api';
+} from '../../utils/burger-api';
+import type { TRegisterData, TLoginData } from '../../utils/burger-api';
 import { TUser } from '@utils-types';
 import { deleteCookie, setCookie } from '../../utils/cookie';
 
