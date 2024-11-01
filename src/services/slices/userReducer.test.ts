@@ -10,6 +10,16 @@ import userReducer, {
   getUserThunk
 } from './userSlice';
 
+const ACCESS_TOKEN =
+  'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ZjBhMDAyOTdlZGUwMDAxZDA2MDg1NCIsImlhdCI6MTcxMjIyODc2MywiZXhwIjoxNzEyMjI5OTYzfQ.NnIdUkIZ8gHHicj86d2Xrxxz5wxTqJyghFfyU9ZQ6E0';
+
+const REFRESH_TOKEN =
+  'cae7fbb0ce188f2c244e611b328ae4869b892902b1ba10c81cee99194854b1d3c192e0bfc9b90b06';
+
+const user = {
+  email: 'lleksiv@gmail.com',
+  name: 'Georg Shakillow'
+};
 const setupStore = () =>
   configureStore({
     reducer: {
@@ -41,14 +51,9 @@ describe('Тесты экшенов клиента', () => {
     });
     test('Тест экшена успешного логина', () => {
       const mockedPayload = {
-        accessToken:
-          'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ZjBhMDAyOTdlZGUwMDAxZDA2MDg1NCIsImlhdCI6MTcxMjIyODc2MywiZXhwIjoxNzEyMjI5OTYzfQ.NnIdUkIZ8gHHicj86d2Xrxxz5wxTqJyghFfyU9ZQ6E0',
-        refreshToken:
-          'cae7fbb0ce188f2c244e611b328ae4869b892902b1ba10c81cee99194854b1d3c192e0bfc9b90b06',
-        user: {
-          email: 'lleksiv@gmail.com',
-          name: 'Georg Shakillow'
-        }
+        accessToken: ACCESS_TOKEN,
+        refreshToken: REFRESH_TOKEN,
+        user: user
       };
       const store = setupStore();
       store.dispatch({
@@ -84,14 +89,9 @@ describe('Тесты экшенов клиента', () => {
     });
     test('Тест экшена успешной регистрации', () => {
       const mockedPayload = {
-        accessToken:
-          'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ZjBhMDAyOTdlZGUwMDAxZDA2MDg1NCIsImlhdCI6MTcxMjIyODc2MywiZXhwIjoxNzEyMjI5OTYzfQ.NnIdUkIZ8gHHicj86d2Xrxxz5wxTqJyghFfyU9ZQ6E0',
-        refreshToken:
-          'cae7fbb0ce188f2c244e611b328ae4869b892902b1ba10c81cee99194854b1d3c192e0bfc9b90b06',
-        user: {
-          email: 'lleksiv@gmail.com',
-          name: 'Georg Shakillow'
-        }
+        accessToken: ACCESS_TOKEN,
+        refreshToken: REFRESH_TOKEN,
+        user: user
       };
       const store = setupStore();
       store.dispatch({
@@ -163,10 +163,7 @@ describe('Тесты экшенов клиента', () => {
     });
     test('Тест экшена успешного изменения данных клиента', () => {
       const mockedPayload = {
-        user: {
-          email: 'lleksiv@gmail.com',
-          name: 'Georg Shakillow'
-        }
+        user: user
       };
       const store = setupStore();
       store.dispatch({
@@ -274,10 +271,7 @@ describe('Тесты экшенов клиента', () => {
     });
     test('Тест экшена успешного запроса данных пользователя', () => {
       const mockedPayload = {
-        user: {
-          email: 'lleksiv@gmail.com',
-          name: 'Georg Shakillow'
-        }
+        user: user
       };
       const store = setupStore();
       store.dispatch({

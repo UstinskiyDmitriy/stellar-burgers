@@ -15,61 +15,62 @@ jest.mock('@reduxjs/toolkit', () => ({
   nanoid: jest.fn(() => 'mockedID')
 }));
 
-describe('Тест экшенов конструктора', () => {
-  const startState: constructorState = JSON.parse(
-    JSON.stringify(constructorInitialState)
-  );
-  startState.constructorItems = {
-    bun: {
-      _id: '643d69a5c3f7b9001cfa093c',
-      name: 'Краторная булка N-200i',
-      type: 'bun',
-      proteins: 80,
-      fat: 24,
-      carbohydrates: 53,
-      calories: 420,
-      price: 1255,
-      image: 'https://code.s3.yandex.net/react/code/bun-02.png',
-      image_mobile: 'https://code.s3.yandex.net/react/code/bun-02-mobile.png',
-      image_large: 'https://code.s3.yandex.net/react/code/bun-02-large.png',
-      id: '0'
-    },
-    ingredients: [
-      {
-        _id: '643d69a5c3f7b9001cfa0942',
-        name: 'Соус Spicy-X',
-        type: 'sauce',
-        proteins: 30,
-        fat: 20,
-        carbohydrates: 40,
-        calories: 30,
-        price: 90,
-        image: 'https://code.s3.yandex.net/react/code/sauce-02.png',
-        image_mobile:
-          'https://code.s3.yandex.net/react/code/sauce-02-mobile.png',
-        image_large: 'https://code.s3.yandex.net/react/code/sauce-02-large.png',
-        id: '1'
-      },
-      {
-        _id: '643d69a5c3f7b9001cfa0941',
-        name: 'Биокотлета из марсианской Магнолии',
-        type: 'main',
-        proteins: 420,
-        fat: 142,
-        carbohydrates: 242,
-        calories: 4242,
-        price: 424,
-        image: 'https://code.s3.yandex.net/react/code/meat-01.png',
-        image_mobile:
-          'https://code.s3.yandex.net/react/code/meat-01-mobile.png',
-        image_large: 'https://code.s3.yandex.net/react/code/meat-01-large.png',
-        id: '2'
-      }
-    ]
-  };
+const ingredient1 = {
+  _id: '643d69a5c3f7b9001cfa0942',
+  name: 'Соус Spicy-X',
+  type: 'sauce',
+  proteins: 30,
+  fat: 20,
+  carbohydrates: 40,
+  calories: 30,
+  price: 90,
+  image: 'https://code.s3.yandex.net/react/code/sauce-02.png',
+  image_mobile: 'https://code.s3.yandex.net/react/code/sauce-02-mobile.png',
+  image_large: 'https://code.s3.yandex.net/react/code/sauce-02-large.png',
+  id: '1'
+};
 
+const ingredient2 = {
+  _id: '643d69a5c3f7b9001cfa0941',
+  name: 'Биокотлета из марсианской Магнолии',
+  type: 'main',
+  proteins: 420,
+  fat: 142,
+  carbohydrates: 242,
+  calories: 4242,
+  price: 424,
+  image: 'https://code.s3.yandex.net/react/code/meat-01.png',
+  image_mobile: 'https://code.s3.yandex.net/react/code/meat-01-mobile.png',
+  image_large: 'https://code.s3.yandex.net/react/code/meat-01-large.png',
+  id: '2'
+};
+
+const bun = {
+  _id: '643d69a5c3f7b9001cfa093c',
+  name: 'Краторная булка N-200i',
+  type: 'bun',
+  proteins: 80,
+  fat: 24,
+  carbohydrates: 53,
+  calories: 420,
+  price: 1255,
+  image: 'https://code.s3.yandex.net/react/code/bun-02.png',
+  image_mobile: 'https://code.s3.yandex.net/react/code/bun-02-mobile.png',
+  image_large: 'https://code.s3.yandex.net/react/code/bun-02-large.png',
+  id: '0'
+};
+
+const startState: constructorState = {
+  ...constructorInitialState,
+  constructorItems: {
+    bun: bun,
+    ingredients: [ingredient1, ingredient2]
+  }
+};
+
+describe('Тест экшенов конструктора', () => {
   test('Тест экшена добавления ингредиента', () => {
-    const ingredient = {
+    const newIngredient = {
       _id: '643d69a5c3f7b9001cfa093e',
       name: 'Филе Люминесцентного тетраодонтимформа',
       type: 'main',
@@ -84,11 +85,14 @@ describe('Тест экшенов конструктора', () => {
     };
     const endState: constructorState = JSON.parse(JSON.stringify(startState));
     endState.constructorItems.ingredients.push({
-      ...ingredient,
+      ...newIngredient,
       id: 'mockedID'
     });
 
-    const newState = constructorReducer(startState, addIngredient(ingredient));
+    const newState = constructorReducer(
+      startState,
+      addIngredient(newIngredient)
+    );
 
     expect(nanoid).toHaveBeenCalled();
     expect(newState).toEqual(endState);
@@ -131,7 +135,7 @@ describe('Тест экшенов конструктора', () => {
     });
     test('Тест экшена перемещения ингредиента вниз', () => {
       const ingredientId = 0;
-      const endState: constructorState = JSON.parse(JSON.stringify(startState));
+      const endState = JSON.parse(JSON.stringify(startState));
       [
         endState.constructorItems.ingredients[ingredientId],
         endState.constructorItems.ingredients[ingredientId + 1]

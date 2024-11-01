@@ -3,14 +3,9 @@ import { deleteCookie, setCookie } from '../../../src/utils/cookie';
 
 describe('Тест конструктора бургеров', () => {
   beforeEach(() => {
-    setCookie(
-      'accessToken',
-      'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ZjBhMDAyOTdlZGUwMDAxZDA2MDg1NCIsImlhdCI6MTcxMjMxMDE2NiwiZXhwIjoxNzEyMzExMzY2fQ.v7kdecJvLfdmlBsvf_BySvsfnXX3K0Er__GNYw-NRLM'
-    );
-    localStorage.setItem(
-      'refreshToken',
-      '9cbdd5b777edfb92bd9183a7cf2372a12b545c045a9796f94c1afd0b9d374a8794aa15bee20a7556'
-    );
+    setCookie('accessToken', 'fakeAccesToken');
+    localStorage.setItem('refreshToken', 'fakeRefreshToken');
+
     cy.intercept('GET', `${URL}//auth/user`, { fixture: 'user.json' }).as(
       'getUser'
     );
@@ -52,16 +47,15 @@ describe('Тест конструктора бургеров', () => {
     cy.get('@modal').should('not.exist');
   });
   it('Тест создания заказа', () => {
-    cy.intercept('POST', `${URL}/orders`, { fixture: 'order.json' }).as(
-      'orderBurgerApi'
-    );
     cy.get('[data-cy="constructor"]').as('constructor');
 
     cy.addIngredient('Булки');
     cy.addIngredient('Начинки');
 
     cy.get('@constructor').children('div').children('button').click();
-
+    cy.intercept('POST', `${URL}/orders`, { fixture: 'order.json' }).as(
+      'orderBurgerApi'
+    );
     cy.get('[data-cy="modal"]').as('modal');
     cy.get('@modal').should('exist');
     cy.get('@modal').should('contain', '37865');

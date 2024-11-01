@@ -9,6 +9,31 @@ const setupStore = () =>
     }
   });
 
+const mockedPayload = {
+  orders: [
+    {
+      _id: '660e81bb97ede0001d0643eb',
+      ingredients: [
+        '643d69a5c3f7b9001cfa0943',
+        '643d69a5c3f7b9001cfa0943',
+        '643d69a5c3f7b9001cfa0943',
+        '643d69a5c3f7b9001cfa0943',
+        '643d69a5c3f7b9001cfa0943',
+        '643d69a5c3f7b9001cfa0943',
+        '643d69a5c3f7b9001cfa0943',
+        '643d69a5c3f7b9001cfa0943',
+        '643d69a5c3f7b9001cfa093d'
+      ],
+      owner: '65db1c0a97ede0001d05e2d6',
+      status: 'done',
+      name: 'Space флюоресцентный бургер',
+      createdAt: '2024-04-04T10:32:27.595Z',
+      updatedAt: '2024-04-04T10:32:28.181Z',
+      number: 37596
+    }
+  ]
+};
+
 describe('Тесты экшенов заказа', () => {
   describe('Тесты экшена получения данных заказа', () => {
     test('Тест экшена ожидания ответа после получения данных заказа', () => {
@@ -30,30 +55,6 @@ describe('Тесты экшенов заказа', () => {
       expect(state.order.error).toBe(error);
     });
     test('Тест экшена успешного ответа после получения данных заказа', () => {
-      const mockedPayload = {
-        orders: [
-          {
-            _id: '660e81bb97ede0001d0643eb',
-            ingredients: [
-              '643d69a5c3f7b9001cfa0943',
-              '643d69a5c3f7b9001cfa0943',
-              '643d69a5c3f7b9001cfa0943',
-              '643d69a5c3f7b9001cfa0943',
-              '643d69a5c3f7b9001cfa0943',
-              '643d69a5c3f7b9001cfa0943',
-              '643d69a5c3f7b9001cfa0943',
-              '643d69a5c3f7b9001cfa0943',
-              '643d69a5c3f7b9001cfa093d'
-            ],
-            owner: '65db1c0a97ede0001d05e2d6',
-            status: 'done',
-            name: 'Space флюоресцентный бургер',
-            createdAt: '2024-04-04T10:32:27.595Z',
-            updatedAt: '2024-04-04T10:32:28.181Z',
-            number: 37596
-          }
-        ]
-      };
       const store = setupStore();
       store.dispatch({
         type: getOrderThunk.fulfilled.type,
