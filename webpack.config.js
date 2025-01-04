@@ -54,7 +54,12 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: './public/index.html'
     }),
-    new Dotenv()
+    new Dotenv(),
+
+    new webpack.EnvironmentPlugin({
+      PUBLIC_PATH: null,
+      NODE_ENV: 'development'
+    })
   ],
   resolve: {
     extensions: [
@@ -82,8 +87,12 @@ module.exports = {
     }
   },
   output: {
-    path: path.resolve(__dirname, './dist'),
-    filename: 'bundle.js'
+    path: path.resolve(__dirname, '..', './dist'),
+    filename: production
+      ? 'static/scripts/[name].[contenthash].js'
+      : 'static/scripts/[name].js',
+    publicPath: process.env.PUBLIC_PATH ? process.env.PUBLIC_PATH : '/',
+    chunkFilename: 'static/scripts/[name].[contenthash].bundle.js'
   },
   devServer: {
     static: path.join(__dirname, './dist'),
